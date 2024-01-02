@@ -140,7 +140,7 @@ def ip_gui(custom=NO):
     label_dst = Label(root, text="DST IP", fg="white", bg="black")
     label_dst.place(x=5, y=50)
     text_dst = Text(root, height=1, width=15, fg="white", bg="black", insertbackground="white")
-    text_dst.insert("end", 80)
+    text_dst.insert("end", "127.0.0.1")
     text_dst.place(x=45, y=50)
 
     # hl (header length)
@@ -217,7 +217,7 @@ def ip_gui(custom=NO):
     label_count = Label(root, text="COUNT", fg="white", bg="black")
     label_count.place(x=575, y=85)
     text_count = Text(root, height=1, width=4, fg="white", bg="black", insertbackground="white")
-    text_count.insert("end", 0)
+    text_count.insert("end", 1)
     text_count.place(x=625, y=85)
 
     if custom == YES:
@@ -299,12 +299,6 @@ def tcp_gui():
     if ether_tcp.get() == "ether_tcp":
         ether_options()
 
-        # Count
-        label_count = Label(root, text="COUNT", fg="white", bg="black")
-        label_count.place(x=575, y=85)
-        text_count = Text(root, height=1, width=4, fg="white", bg="black", insertbackground="white")
-        text_count.place(x=625, y=85)
-
         # seq
         label_seq = Label(root, text="SEQ", fg="white", bg="black")
         label_seq.place(x=370, y=115)
@@ -360,11 +354,6 @@ def tcp_gui():
         text_tcp_options.place(x=650, y=145)
     
     else:
-        # Count
-        label_count = Label(root, text="COUNT", fg="white", bg="black")
-        label_count.place(x=575, y=85)
-        text_count = Text(root, height=1, width=4, fg="white", bg="black", insertbackground="white")
-        text_count.place(x=625, y=85)
 
         # seq
         label_seq = Label(root, text="SEQ", fg="white", bg="black")
