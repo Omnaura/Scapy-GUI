@@ -134,6 +134,7 @@ def ip_gui(custom=NO):
         label_dprt = Label(root, text="PRT", fg="white", bg="black")
         label_dprt.place(x=174, y=50)
         text_dprt = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
+        text_dprt.insert("end", 80)
         text_dprt.place(x=200, y=50)
 
     # dst ip
