@@ -5,6 +5,8 @@ root = Tk()
 root.geometry("700x350+430+250")
 wait_var = StringVar()
 
+# window title
+
 # ether tcp
 ether_tcp = StringVar()
 
@@ -120,22 +122,19 @@ def ip_gui(custom=NO):
     text_src = Text(root, height=1, width=15, fg="white", bg="black", insertbackground="white")
     text_src.insert("end", "127.0.0.1")
     text_src.place(x=45, y=25)
-
-    if custom == NO:
-        pass
-    else:
-        # src port
-        label_sprt = Label(root, text="PRT", fg="white", bg="black")
-        label_sprt.place(x=174, y=25)
-        text_sprt = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
-        text_sprt.insert("end", "80")
-        text_sprt.place(x=200, y=25)
-        # dst port
-        label_dprt = Label(root, text="PRT", fg="white", bg="black")
-        label_dprt.place(x=174, y=50)
-        text_dprt = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
-        text_dprt.insert("end", 80)
-        text_dprt.place(x=200, y=50)
+        
+    # src port
+    label_sprt = Label(root, text="PRT", fg="white", bg="black")
+    label_sprt.place(x=174, y=25)
+    text_sprt = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
+    text_sprt.insert("end", "80")
+    text_sprt.place(x=200, y=25)
+    # dst port
+    label_dprt = Label(root, text="PRT", fg="white", bg="black")
+    label_dprt.place(x=174, y=50)
+    text_dprt = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
+    text_dprt.insert("end", 80)
+    text_dprt.place(x=200, y=50)
 
     # dst ip
     label_dst = Label(root, text="DST IP", fg="white", bg="black")
@@ -268,6 +267,9 @@ def udp_gui():
         text_udp_checksum = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
         text_udp_checksum.place(x=577, y=115)
     else:
+
+        ip_gui()
+
         # udp len
         label_udp_len = Label(root, text="UDP LEN", fg="white", bg="black")
         label_udp_len.place(x=370, y=115)
@@ -355,7 +357,9 @@ def tcp_gui():
         text_tcp_options.place(x=650, y=145)
     
     else:
-
+        
+        ip_gui()
+        
         # seq
         label_seq = Label(root, text="SEQ", fg="white", bg="black")
         label_seq.place(x=370, y=115)
