@@ -1,6 +1,5 @@
 from tkinter import *
 from scapy.all import *
-from tkinter import ttk
 
 root = Tk()
 root.geometry("700x350+430+250")
@@ -69,90 +68,106 @@ def ip_gui(custom=NO):
     label_src = Label(root, text="SRC IP", fg="white", bg="black")
     label_src.place(x=5, y=25)
     text_src = Text(root, height=1, width=15, fg="white", bg="black", insertbackground="white")
+    text_src.insert("end", "127.0.0.1")
     text_src.place(x=45, y=25)
 
-    # src port
-    label_sprt = Label(root, text="PRT", fg="white", bg="black")
-    label_sprt.place(x=174, y=25)
-    text_sprt = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
-    text_sprt.place(x=200, y=25)
+    if custom == NO:
+        pass
+    else:
+        # src port
+        label_sprt = Label(root, text="PRT", fg="white", bg="black")
+        label_sprt.place(x=174, y=25)
+        text_sprt = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
+        text_sprt.insert("end", "80")
+        text_sprt.place(x=200, y=25)
+        # dst port
+        label_dprt = Label(root, text="PRT", fg="white", bg="black")
+        label_dprt.place(x=174, y=50)
+        text_dprt = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
+        text_dprt.place(x=200, y=50)
 
     # dst ip
     label_dst = Label(root, text="DST IP", fg="white", bg="black")
     label_dst.place(x=5, y=50)
     text_dst = Text(root, height=1, width=15, fg="white", bg="black", insertbackground="white")
+    text_dst.insert("end", 80)
     text_dst.place(x=45, y=50)
-
-    # dst port
-    label_dprt = Label(root, text="PRT", fg="white", bg="black")
-    label_dprt.place(x=174, y=50)
-    text_dprt = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
-    text_dprt.place(x=200, y=50)
 
     # hl (header length)
     label_hl = Label(root, text="HL", fg="white", bg="black")
     label_hl.place(x=255, y=25)
     text_hl = Text(root, height=1, width=2, fg="white", bg="black", insertbackground="white")
+    text_hl.insert("end", 5)
     text_hl.place(x=280, y=25)
 
     # tos (Type of service)
     label_tos = Label(root, text="TOS", fg="white", bg="black")
     label_tos.place(x=255, y=50)
     text_tos = Text(root, height=1, width=3, fg="white", bg="black", insertbackground="white")
+    text_tos.insert("end", 0)
     text_tos.place(x=285, y=50)
 
     # len (length)
     label_len = Label(root, text="LEN", fg="white", bg="black")
     label_len.place(x=310, y=25)
     text_len = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
+    text_len.insert("end", 20)
     text_len.place(x=340, y=25)
 
     # id (identifier)
     label_id = Label(root, text="ID", fg="white", bg="black")
     label_id.place(x=320, y=50)
     text_id = Text(root, height=1, width=6, fg="white", bg="black", insertbackground="white")
+    text_id.insert("end", 0)
     text_id.place(x=340, y=50)
 
     # flag
     label_flag = Label(root, text="FLAG", fg="white", bg="black")
     label_flag.place(x=390, y=25)
     text_flag = Text(root, height=1, width=1, fg="white", bg="black", insertbackground="white")
+    text_flag.insert("end", 0)
     text_flag.place(x=430, y=25)
 
     # frag (fragment)
     label_frag = Label(root, text="FRAG", fg="white", bg="black")
     label_frag.place(x=400, y=50)
     text_frag = Text(root, height=1, width=4, fg="white", bg="black", insertbackground="white")
+    text_frag.insert("end", 0)
     text_frag.place(x=440, y=50)
 
     # ttl (time to live)
     label_ttl = Label(root, text="TTL", fg="white", bg="black")
     label_ttl.place(x=450, y=25)
     text_ttl = Text(root, height=1, width=4, fg="white", bg="black", insertbackground="white")
+    text_ttl.insert("end", 64)
     text_ttl.place(x=480, y=25)
 
     # proto
     label_proto = Label(root, text="PROTO", fg="white", bg="black")
     label_proto.place(x=485, y=50)
     text_proto = Text(root, height=1, width=4, fg="white", bg="black", insertbackground="white")
+    text_proto.insert("end", 1)
     text_proto.place(x=530, y=50)
 
     # checksum
     label_checksum = Label(root, text="CHECKSUM", fg="white", bg="black")
     label_checksum.place(x=525, y=25)
-    text_checksum = Text(root, height=1, width=4, fg="white", bg="black", insertbackground="white")
+    text_checksum = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
+    text_checksum.insert("end", "65535")
     text_checksum.place(x=595, y=25)
 
     # option
     label_option = Label(root, text="OPTION", fg="white", bg="black")
     label_option.place(x=575, y=50)
     text_option = Text(root, height=1, width=4, fg="white", bg="black", insertbackground="white")
+    text_option.insert("end", 0)
     text_option.place(x=625, y=50)
 
     # Count
     label_count = Label(root, text="COUNT", fg="white", bg="black")
     label_count.place(x=575, y=85)
     text_count = Text(root, height=1, width=4, fg="white", bg="black", insertbackground="white")
+    text_count.insert("end", 0)
     text_count.place(x=625, y=85)
 
     if custom == YES:
