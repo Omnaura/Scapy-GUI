@@ -8,6 +8,4 @@ NOTE: You have to put every field of input in for the packet to be sent or a err
 
 WARNING: This code may be glitchy, unfinished or error prone, this is for testing not use
 
-Happy new years
-
 please give feedback on what I could improve and implement 
