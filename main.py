@@ -5,8 +5,6 @@ root = Tk()
 root.geometry("700x350+430+250")
 wait_var = StringVar()
 
-# window title
-
 # ether tcp
 ether_tcp = StringVar()
 
@@ -122,19 +120,22 @@ def ip_gui(custom=NO):
     text_src = Text(root, height=1, width=15, fg="white", bg="black", insertbackground="white")
     text_src.insert("end", "127.0.0.1")
     text_src.place(x=45, y=25)
-        
-    # src port
-    label_sprt = Label(root, text="PRT", fg="white", bg="black")
-    label_sprt.place(x=174, y=25)
-    text_sprt = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
-    text_sprt.insert("end", "80")
-    text_sprt.place(x=200, y=25)
-    # dst port
-    label_dprt = Label(root, text="PRT", fg="white", bg="black")
-    label_dprt.place(x=174, y=50)
-    text_dprt = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
-    text_dprt.insert("end", 80)
-    text_dprt.place(x=200, y=50)
+
+    if custom == NO:
+        pass
+    else:
+        # src port
+        label_sprt = Label(root, text="PRT", fg="white", bg="black")
+        label_sprt.place(x=174, y=25)
+        text_sprt = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
+        text_sprt.insert("end", "80")
+        text_sprt.place(x=200, y=25)
+        # dst port
+        label_dprt = Label(root, text="PRT", fg="white", bg="black")
+        label_dprt.place(x=174, y=50)
+        text_dprt = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
+        text_dprt.insert("end", 80)
+        text_dprt.place(x=200, y=50)
 
     # dst ip
     label_dst = Label(root, text="DST IP", fg="white", bg="black")
@@ -220,15 +221,7 @@ def ip_gui(custom=NO):
     text_count.insert("end", 1)
     text_count.place(x=625, y=85)
 
-    if custom == YES:
-        # wait for reply
-        Checkbutton(root, text="Wait for reply", selectcolor="black", variable=wait_var, onvalue="wait", offvalue="", bg="black", fg="white").place(x=265, y=115)
-
-        # buttons
-        Button(root, text="Send", command=send_packet, bg="black", fg="white").place(x=220, y=115)
-        Button(root, command=hex_dump, bg="black", fg="white", text="HEXDUMP").place(x=415, y=85)
-        Button(root, command=show_info, bg="black", fg="white", text="SHOWINFO").place(x=500, y=85)
-    elif custom == NO:
+    if custom == NO:
         # wait for reply
         Checkbutton(root, text="Wait for reply", selectcolor="black", variable=wait_var, onvalue="wait", offvalue="", bg="black", fg="white").place(x=5, y=75)
 
@@ -236,6 +229,8 @@ def ip_gui(custom=NO):
         Button(root, text="Send", command=send_packet, bg="black", fg="white").place(x=117, y=75)
         Button(root, command=hex_dump, bg="black", fg="white", text="HEXDUMP").place(x=170, y=75)
         Button(root, command=show_info, bg="black", fg="white", text="SHOWINFO").place(x=250, y=75)
+    else:
+        pass
 
 # udp
 def udp_gui():
@@ -267,9 +262,6 @@ def udp_gui():
         text_udp_checksum = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
         text_udp_checksum.place(x=577, y=115)
     else:
-
-        ip_gui()
-
         # udp len
         label_udp_len = Label(root, text="UDP LEN", fg="white", bg="black")
         label_udp_len.place(x=370, y=115)
@@ -281,6 +273,14 @@ def udp_gui():
         label_udp_checksum.place(x=480, y=115)
         text_udp_checksum = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
         text_udp_checksum.place(x=577, y=115)
+
+    # wait for reply
+    Checkbutton(root, text="Wait for reply", selectcolor="black", variable=wait_var, onvalue="wait", offvalue="", bg="black", fg="white").place(x=265, y=115)
+
+    # buttons
+    Button(root, text="Send", command=send_packet, bg="black", fg="white").place(x=220, y=115)
+    Button(root, command=hex_dump, bg="black", fg="white", text="HEXDUMP").place(x=415, y=85)
+    Button(root, command=show_info, bg="black", fg="white", text="SHOWINFO").place(x=500, y=85)
 
     # udp ether
     Checkbutton(root, text="ETHER", selectcolor="black", variable=ether_udp, command=udp_gui, onvalue="ether_udp", offvalue="", bg="black", fg="white").place(x=130, y=0)
@@ -357,9 +357,7 @@ def tcp_gui():
         text_tcp_options.place(x=650, y=145)
     
     else:
-        
-        ip_gui()
-        
+
         # seq
         label_seq = Label(root, text="SEQ", fg="white", bg="black")
         label_seq.place(x=370, y=115)
@@ -413,6 +411,14 @@ def tcp_gui():
         label_tcp_options.place(x=570, y=145)
         text_tcp_options = Text(root, height=1, width=3, fg="white", bg="black", insertbackground="white")
         text_tcp_options.place(x=650, y=145)
+
+    # wait for reply
+    Checkbutton(root, text="Wait for reply", selectcolor="black", variable=wait_var, onvalue="wait", offvalue="", bg="black", fg="white").place(x=265, y=115)
+
+    # buttons
+    Button(root, text="Send", command=send_packet, bg="black", fg="white").place(x=220, y=115)
+    Button(root, command=hex_dump, bg="black", fg="white", text="HEXDUMP").place(x=415, y=85)
+    Button(root, command=show_info, bg="black", fg="white", text="SHOWINFO").place(x=500, y=85)
 
     # tcp ether
     Checkbutton(root, text="ETHER", selectcolor="black", variable=ether_tcp, command=tcp_gui, onvalue="ether_tcp", offvalue="", bg="black", fg="white").place(x=130, y=0)
