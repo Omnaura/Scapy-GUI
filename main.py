@@ -11,54 +11,40 @@ ether_tcp = StringVar()
 # ether udp
 ether_udp = StringVar()
 
-# ether options
-def ether_options():
-    global text_mac_src, text_mac_dst
-    # src mac
-    label_mac_src = Label(root, text="SRC MAC", fg="white", bg="black")
-    label_mac_src.place(x=5, y=85)
-    text_mac_src = Text(root, height=1, width=17, fg="white", bg="black", insertbackground="white")
-    text_mac_src.place(x=70, y=85)
-
-    # dst mac
-    label_mac_dst = Label(root, text="DST MAC", fg="white", bg="black")
-    label_mac_dst.place(x=5, y=115)
-    text_mac_dst = Text(root, height=1, width=17, fg="white", bg="black", insertbackground="white")
-    text_mac_dst.place(x=70, y=115)
-
-    # type
-    label_type = Label(root, text="TYPE", fg="white", bg="black")
-    label_type.place(x=220, y=85)
-    text_type = Text(root, height=1, width=17, fg="white", bg="black", insertbackground="white")
-    text_type.place(x=255, y=85)
 # send packet
 def send_packet():
     if ip_p == True:
         if wait_var.get() == "wait":
-            ans, unans = sr(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c"))))
+            ans, unans = sr(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")))
             for p in ans:
                 print(p[0])
                 print(p[1])
             for p in unans:
                 print(p[0])
+            pass
         else:
-            scapy.sendrecv.send(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c"))), count=int(text_count.get("1.0", "end-1c")))
+            scapy.sendrecv.send(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")), count=int(text_count.get("1.0", "end-1c")))
     elif tcp_p == True:
         if wait_var.get() == "wait":
             if ether_tcp.get() == "ether_udp":
-                ans, unans = sr(Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), text_seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=int(text_tcp_options.get("1.0", "end-1c"))))
+                ans, unans = sr(Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")))
+                for p in ans:
+                    print(p[0])
+                    print(p[1])
+                for p in unans:
+                    print(p[0])
             elif ether_tcp.get() == "":
-                ans, unans = sr(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), text_seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=int(text_tcp_options.get("1.0", "end-1c"))))
-            for p in ans:
-                print(p[0])
-                print(p[1])
-            for p in unans:
-                print(p[0])
+                ans, unans = sr(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")))
+                for p in ans:
+                    print(p[0])
+                    print(p[1])
+                for p in unans:
+                    print(p[0])
         else:
             if ether_tcp.get() == "ether_tcp":
-                scapy.sendrecv.sendp(Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), text_seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=int(text_tcp_options.get("1.0", "end-1c"))), count=int(text_count.get("1.0", "end-1c")))
+                scapy.sendrecv.sendp(Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")), count=int(text_count.get("1.0", "end-1c")))
             elif ether_tcp.get() == "":
-                scapy.sendrecv.send(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), text_seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=int(text_tcp_options.get("1.0", "end-1c"))), count=int(text_count.get("1.0", "end-1c")))
+                scapy.sendrecv.send(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")), count=int(text_count.get("1.0", "end-1c")))
     elif udp_p == True:
         if wait_var.get() == "wait":
             if ether_udp.get() == "ether_udp":
@@ -80,33 +66,33 @@ def send_packet():
 def show_info():
     if tcp_p == True:
         if ether_tcp.get() == "ether_tcp":
-            Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), text_seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=int(text_tcp_options.get("1.0", "end-1c"))).show2()
+            Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")).show2()
         else:
-            IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), text_seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=int(text_tcp_options.get("1.0", "end-1c"))).show2()    
+            IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), text_seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")).show2()    
     elif udp_p == True:
         if ether_udp.get() == "ether_udp":
-            Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/UDP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), text_seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=int(text_tcp_options.get("1.0", "end-1c"))).show2()
+            Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/UDP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")).show2()
         else:
-            IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/UDP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), text_seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=int(text_tcp_options.get("1.0", "end-1c"))).show2()
+            IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/UDP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), text_seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")).show2()
     elif ip_p == True:
         IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c"))).show2()
 # hex dump
 def hex_dump():
     if tcp_p == True:
         if ether_tcp.get() == "ether_tcp":
-            hexdump(Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), text_seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=int(text_tcp_options.get("1.0", "end-1c"))), count=int(text_count.get("1.0", "end-1c")))
+            hexdump(Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")), count=int(text_count.get("1.0", "end-1c")))
         else:
-            hexdump(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), text_seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=int(text_tcp_options.get("1.0", "end-1c"))), count=int(text_count.get("1.0", "end-1c")))
+            hexdump(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=str(text_tcp_options.get("1.0", "end-1c"))), count=int(text_count.get("1.0", "end-1c")))
     elif udp_p == True:
         if ether_udp.get() == "ether_udp":
-            hexdump(Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/UDP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), text_seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=int(text_tcp_options.get("1.0", "end-1c"))), count=int(text_count.get("1.0", "end-1c")))
+            hexdump(Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/UDP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), text_seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")), count=int(text_count.get("1.0", "end-1c")))
         else:
-            hexdump(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/UDP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), text_seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=int(text_tcp_options.get("1.0", "end-1c"))), count=int(text_count.get("1.0", "end-1c")))
+            hexdump(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/UDP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), text_seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_tcp_options.get("1.0", "end-1c")), count=int(text_count.get("1.0", "end-1c")))
     elif ip_p == True:
         hexdump(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c"))))
 # ip gui
-def ip_gui(custom=NO):
-    global ip_p, text_count,udp_p,tcp_p,text_src,text_sprt,text_dst,text_dprt,text_hl,text_tos,text_len,text_id,text_flag,text_frag,text_ttl,text_proto,text_checksum,text_option
+def ip_gui():
+    global ip_p,text_count,udp_p,tcp_p,text_src,text_dst,text_hl,text_tos,text_len,text_id,text_flag,text_frag,text_ttl,text_proto,text_checksum,text_option
     udp_p = False
     tcp_p = False
     ip_p = True
@@ -210,12 +196,12 @@ def ip_gui(custom=NO):
 
     # buttons
     Button(root, text="Send", command=send_packet, bg="black", fg="white").place(x=117, y=75)
-    Button(root, command=hex_dump, bg="black", fg="white", text="HEXDUMP").place(x=170, y=75)
-    Button(root, command=show_info, bg="black", fg="white", text="SHOWINFO").place(x=250, y=75)
+    Button(root, command=hex_dump, bg="black", fg="white", text="HEXDUMP").place(x=180, y=25)
+    Button(root, command=show_info, bg="black", fg="white", text="SHOWINFO").place(x=180, y=55)
 
 # udp
 def udp_gui():
-    global ip_p,udp_p,tcp_p
+    global text_sprt,text_dprt,text_udp_checksum,text_udp_len,ip_p,text_count,udp_p,tcp_p,text_src,text_dst,text_hl,text_tos,text_len,text_id,text_flag,text_frag,text_ttl,text_proto,text_checksum,text_option,text_mac_src,text_mac_dst,text_type
     udp_p = True
     ip_p = False
     tcp_p = False
@@ -361,17 +347,6 @@ def udp_gui():
     label_udp_checksum.place(x=480, y=115)
     text_udp_checksum = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
     text_udp_checksum.place(x=577, y=115)
-    # udp len
-    label_udp_len = Label(root, text="UDP LEN", fg="white", bg="black")
-    label_udp_len.place(x=370, y=115)
-    text_udp_len = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
-    text_udp_len.place(x=425, y=115)
-
-    # udp checksum
-    label_udp_checksum = Label(root, text="UDP CHECKSUM", fg="white", bg="black")
-    label_udp_checksum.place(x=480, y=115)
-    text_udp_checksum = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
-    text_udp_checksum.place(x=577, y=115)
 
     # wait for reply
     Checkbutton(root, text="Wait for reply", selectcolor="black", variable=wait_var, onvalue="wait", offvalue="", bg="black", fg="white").place(x=265, y=115)
@@ -382,11 +357,11 @@ def udp_gui():
     Button(root, command=show_info, bg="black", fg="white", text="SHOWINFO").place(x=500, y=85)
 
     # udp ether
-    Checkbutton(root, text="ETHER", selectcolor="black", variable=ether_udp, command=udp_gui, onvalue="ether_udp", offvalue="", bg="black", fg="white").place(x=130, y=0)
+    Checkbutton(root, text="ETHER", selectcolor="black", variable=ether_udp, command=udp_gui, onvalue="ether_udp", offvalue="", bg="black", fg="white").place(x=140, y=0)
 
 # tcp
 def tcp_gui():
-    global ip_p, tcp_p, udp_p,text_tcp_options,text_urgptr,text_tcp_checksum,text_window,text_tcp_flags,text_reserved, text_ack,text_dataofs,text_seq,text_mac_src,text_mac_dst
+    global text_sprt,text_dprt,text_tcp_options,text_urgptr,text_tcp_checksum,text_window,text_tcp_flags,text_reserved,text_dataofs,text_ack,text_seq,ip_p,text_count,udp_p,tcp_p,text_src,text_dst,text_hl,text_tos,text_len,text_id,text_flag,text_frag,text_ttl,text_proto,text_checksum,text_option,text_mac_src,text_mac_dst
     tcp_p = True
     udp_p = False
     ip_p = False
@@ -523,59 +498,71 @@ def tcp_gui():
     text_count.insert("end", 1)
     text_count.place(x=625, y=85)
 
-    # tcp options list
+    ####################
+    # tcp options list #
+    ####################
+
     # seq
     label_seq = Label(root, text="SEQ", fg="white", bg="black")
     label_seq.place(x=370, y=115)
     text_seq = Text(root, height=1, width=10, fg="white", bg="black", insertbackground="white")
+    text_seq.insert("end", 0)
     text_seq.place(x=400, y=115)
 
     # ack
     label_ack = Label(root, text="ACK", fg="white", bg="black")
     label_ack.place(x=490, y=115)
     text_ack = Text(root, height=1, width=10, fg="white", bg="black", insertbackground="white")
+    text_ack.insert("end", 0)
     text_ack.place(x=520, y=115)
 
     # dataofs
     label_dataofs = Label(root, text="DATAOFS", fg="white", bg="black")
     label_dataofs.place(x=610, y=115)
     text_dataofs = Text(root, height=1, width=2, fg="white", bg="black", insertbackground="white")
+    text_dataofs.insert("end", 0)
     text_dataofs.place(x=670, y=115)
 
     # reserved
     label_reserved = Label(root, text="RESERVED", fg="white", bg="black")
     label_reserved.place(x=5, y=145)
     text_reserved = Text(root, height=1, width=1, fg="white", bg="black", insertbackground="white")
+    text_reserved.insert("end", 0)
     text_reserved.place(x=70, y=145)
 
     # tcp flags
     label_tcp_flags = Label(root, text="TCP FLAGS", fg="white", bg="black")
     label_tcp_flags.place(x=90, y=145)
     text_tcp_flags = Text(root, height=1, width=3, fg="white", bg="black", insertbackground="white")
+    text_tcp_flags.insert("end", 2)
     text_tcp_flags.place(x=160, y=145)
 
     # window
     label_window = Label(root, text="WINDOW", fg="white", bg="black")
     label_window.place(x=200, y=145)
     text_window = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
+    text_window.insert("end", 8192)
     text_window.place(x=260, y=145)
 
     # tcp chksum
     label_tcp_checksum = Label(root, text="TCP CHECKSUM", fg="white", bg="black")
     label_tcp_checksum.place(x=315, y=145)
     text_tcp_checksum = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
+    text_tcp_checksum.insert("end", 0)
     text_tcp_checksum.place(x=410, y=145)
 
     # urgptr
     label_urgptr = Label(root, text="URGPTR", fg="white", bg="black")
     label_urgptr.place(x=465, y=145)
     text_urgptr = Text(root, height=1, width=5, fg="white", bg="black", insertbackground="white")
+    text_urgptr.insert("end", 0)
     text_urgptr.place(x=516, y=145)
 
     # tcp options
     label_tcp_options = Label(root, text="TCP OPTIONS", fg="white", bg="black")
     label_tcp_options.place(x=570, y=145)
     text_tcp_options = Text(root, height=1, width=3, fg="white", bg="black", insertbackground="white")
+    text_tcp_options.insert("end", [])
     text_tcp_options.place(x=650, y=145)
 
     # wait for reply
@@ -587,7 +574,7 @@ def tcp_gui():
     Button(root, command=show_info, bg="black", fg="white", text="SHOWINFO").place(x=500, y=85)
 
     # udp ether
-    Checkbutton(root, text="ETHER", selectcolor="black", variable=ether_tcp, command=tcp_gui, onvalue="ether_tcp", offvalue="", bg="black", fg="white").place(x=130, y=0)
+    Checkbutton(root, text="ETHER", selectcolor="black", variable=ether_tcp, command=tcp_gui, onvalue="ether_tcp", offvalue="", bg="black", fg="white").place(x=140, y=0)
 
 # UDP, TCP
 iprotocals = StringVar()
