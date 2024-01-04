@@ -1,5 +1,10 @@
 from tkinter import *
+import socket
 from scapy.all import *
+
+# get my ip address
+hostname = socket.gethostname()
+my_ip = socket.gethostbyname(hostname)
 
 root = Tk()
 root.geometry("700x350+430+250")
@@ -15,53 +20,77 @@ ether_udp = StringVar()
 def send_packet():
     if ip_p == True:
         if wait_var.get() == "wait":
-            ans, unans = sr(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")))
-            for p in ans:
-                print(p)
-                print(p)
-            for p in unans:
-                print(p)
-            pass
+            try:
+                ans, unans = sr(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")))
+                for p in ans:
+                    print(p)
+                for p in unans:
+                    print(p)
+            except ValueError:
+                print("You must fill in all options or else the packet will not be sent...")
         else:
-            scapy.sendrecv.send(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")), count=int(text_count.get("1.0", "end-1c")))
+            try:
+                scapy.sendrecv.send(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")), count=int(text_count.get("1.0", "end-1c")))
+            except ValueError:
+                print("You must fill in all options or else the packet will not be sent...")
     elif tcp_p == True:
         if wait_var.get() == "wait":
             if ether_tcp.get() == "ether_udp":
-                ans, unans = sr(Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c"))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")))
-                for p in ans:
-                    print(p[0])
-                    print(p[1])
-                for p in unans:
-                    print(p[0])
+                try:
+                    ans, unans = sr(Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c"))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")))
+                    for p in ans:
+                        print(p)
+                    for p in unans:
+                        print(p)
+                except ValueError:
+                    print("You must fill in all options or else the packet will not be sent...")
             elif ether_tcp.get() == "":
-                ans, unans = sr(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c"))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")))
-                for p in ans:
-                    print(p[0])
-                    print(p[1])
-                for p in unans:
-                    print(p[0])
+                try:
+                    ans, unans = sr(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c"))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")))
+                    for p in ans:
+                        print(p)
+                    for p in unans:
+                        print(p)
+                except ValueError:
+                    print("You must fill in all options or else the packet will not be sent...")
         else:
             if ether_tcp.get() == "ether_tcp":
-                scapy.sendrecv.sendp(Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c"))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")), count=int(text_count.get("1.0", "end-1c")))
+                try:
+                    scapy.sendrecv.sendp(Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c"))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")), count=int(text_count.get("1.0", "end-1c")))
+                except ValueError:
+                    print("You must fill in all options or else the packet will not be sent...")
             elif ether_tcp.get() == "":
-                scapy.sendrecv.send(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c"))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")), count=int(text_count.get("1.0", "end-1c")))
+                try:
+                    scapy.sendrecv.send(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c"))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")), count=int(text_count.get("1.0", "end-1c")))
+                except ValueError:
+                    print("You must fill in all options or else the packet will not be sent...")
     elif udp_p == True:
         if wait_var.get() == "wait":
             if ether_udp.get() == "ether_udp":
-                ans, unans = sr(Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c"))/UDP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), len=int(text_udp_len.get("1.0", "end-1c")), chksum=int(text_udp_checksum.get("1.0", "end-1c"))))
+                try:
+                    ans, unans = sr(Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c"))/UDP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), len=int(text_udp_len.get("1.0", "end-1c")), chksum=int(text_udp_checksum.get("1.0", "end-1c"))))
+                except ValueError:
+                    print("You must fill in all options or else the packet will not be sent...")
             else:
-                ans, unans = sr(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/UDP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), len=int(text_udp_len.get("1.0", "end-1c")), chksum=int(text_udp_checksum.get("1.0", "end-1c"))))
-            for p in ans:
-                print(p[0])
-                print(p[1])
-            for p in unans:
-                print(p[0])
+                try:
+                    ans, unans = sr(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/UDP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), len=int(text_udp_len.get("1.0", "end-1c")), chksum=int(text_udp_checksum.get("1.0", "end-1c"))))
+                    for p in ans:
+                        print(p)
+                    for p in unans:
+                        print(p)
+                except ValueError:
+                    print("You must fill in all options or else the packet will not be sent...")
         else:
             if ether_udp.get() == "ether_udp":
-                scapy.sendrecv.sendp(Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c"))/UDP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), len=int(text_udp_len.get("1.0", "end-1c")), chksum=int(text_udp_checksum.get("1.0", "end-1c"))), count=int(text_count.get("1.0", "end-1c")))
+                try:
+                    scapy.sendrecv.sendp(Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c"))/UDP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), len=int(text_udp_len.get("1.0", "end-1c")), chksum=int(text_udp_checksum.get("1.0", "end-1c"))), count=int(text_count.get("1.0", "end-1c")))
+                except ValueError:
+                    print("You must fill in all options or else the packet will not be sent...")
             else:
-                scapy.sendrecv.send(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c"))/UDP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), len=int(text_udp_len.get("1.0", "end-1c")), chksum=int(text_udp_checksum.get("1.0", "end-1c"))), count=int(text_count.get("1.0", "end-1c")))
-
+                try:
+                    scapy.sendrecv.send(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c"))/UDP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), len=int(text_udp_len.get("1.0", "end-1c")), chksum=int(text_udp_checksum.get("1.0", "end-1c"))), count=int(text_count.get("1.0", "end-1c")))
+                except ValueError:
+                    print("You must fill in all options or else the packet will not be sent...")
 # infomation
 def show_info():
     if tcp_p == True:
@@ -80,16 +109,16 @@ def show_info():
 def hex_dump():
     if tcp_p == True:
         if ether_tcp.get() == "ether_tcp":
-            hexdump(Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")), count=int(text_count.get("1.0", "end-1c")))
+            hexdump(Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c"))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")), count=int(text_count.get("1.0", "end-1c")))
         else:
-            hexdump(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=str(text_tcp_options.get("1.0", "end-1c"))), count=int(text_count.get("1.0", "end-1c")))
+            hexdump(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c"))/TCP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=str(text_tcp_options.get("1.0", "end-1c"))), count=int(text_count.get("1.0", "end-1c")))
     elif udp_p == True:
         if ether_udp.get() == "ether_udp":
-            hexdump(Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/UDP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")), count=int(text_count.get("1.0", "end-1c")))
+            hexdump(Ether(src=str(text_mac_src.get("1.0", "end-1c")), dst=str(text_mac_dst.get("1.0", "end-1c")))/IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c"))/UDP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")), count=int(text_count.get("1.0", "end-1c")))
         else:
-            hexdump(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c")))/UDP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_tcp_options.get("1.0", "end-1c")), count=int(text_count.get("1.0", "end-1c")))
+            hexdump(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c"))/UDP(sport=int(text_sprt.get("1.0", "end-1c")), dport=int(text_dprt.get("1.0", "end-1c")), seq=int(text_seq.get("1.0", "end-1c")), ack=int(text_ack.get("1.0", "end-1c")), dataofs=int(text_dataofs.get("1.0", "end-1c")), reserved=int(text_reserved.get("1.0", "end-1c")), flags=int(text_tcp_flags.get("1.0", "end-1c")), window=int(text_window.get("1.0", "end-1c")), chksum=int(text_tcp_checksum.get("1.0", "end-1c")), urgptr=int(text_urgptr.get("1.0", "end-1c")), options=text_tcp_options.get("1.0", "end-1c")), count=int(text_count.get("1.0", "end-1c")))
     elif ip_p == True:
-        hexdump(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=int(text_option.get("1.0", "end-1c"))))
+        hexdump(IP(src=str(text_src.get("1.0", "end-1c")), dst=str(text_dst.get("1.0", "end-1c")), ihl=int(text_hl.get("1.0", "end-1c")), tos=int(text_tos.get("1.0", "end-1c")), len=int(text_len.get("1.0", "end-1c")), id=int(text_id.get("1.0", "end-1c")), flags=int(text_flag.get("1.0", "end-1c")), frag=int(text_frag.get("1.0", "end-1c")), ttl=int(text_ttl.get("1.0", "end-1c")), proto=int(text_proto.get("1.0", "end-1c")), chksum=int(text_checksum.get("1.0", "end-1c")), options=text_option.get("1.0", "end-1c")))
 # ip gui
 def ip_gui():
     global ip_p,text_count,udp_p,tcp_p,text_src,text_dst,text_hl,text_tos,text_len,text_id,text_flag,text_frag,text_ttl,text_proto,text_checksum,text_option
@@ -104,7 +133,7 @@ def ip_gui():
     label_src = Label(root, text="SRC IP", fg="white", bg="black")
     label_src.place(x=5, y=25)
     text_src = Text(root, height=1, width=15, fg="white", bg="black", insertbackground="white")
-    text_src.insert("end", "127.0.0.1")
+    text_src.insert("end", my_ip)
     text_src.place(x=45, y=25)
 
     # dst ip
@@ -235,7 +264,7 @@ def udp_gui():
     label_src = Label(root, text="SRC IP", fg="white", bg="black")
     label_src.place(x=5, y=25)
     text_src = Text(root, height=1, width=15, fg="white", bg="black", insertbackground="white")
-    text_src.insert("end", "127.0.0.1")
+    text_src.insert("end", my_ip)
     text_src.place(x=45, y=25)
 
     # src port
@@ -335,7 +364,10 @@ def udp_gui():
     text_count.insert("end", 1)
     text_count.place(x=625, y=85)
 
-    # udp option list
+    ###################
+    # udp option list #
+    ###################
+    
     # udp len
     label_udp_len = Label(root, text="UDP LEN", fg="white", bg="black")
     label_udp_len.place(x=370, y=115)
@@ -397,7 +429,7 @@ def tcp_gui():
     label_src = Label(root, text="SRC IP", fg="white", bg="black")
     label_src.place(x=5, y=25)
     text_src = Text(root, height=1, width=15, fg="white", bg="black", insertbackground="white")
-    text_src.insert("end", "127.0.0.1")
+    text_src.insert("end", my_ip)
     text_src.place(x=45, y=25)
 
     # src port
