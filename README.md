@@ -8,4 +8,4 @@ More network protocols will be coming soon
 
 Read LICENCE
 
-please give feedback on what I could improve and implement 
+Sorry I gave up midway through realising how much more work I would
