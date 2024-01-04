@@ -68,9 +68,13 @@ patents cannot be used to render the program non-free.
   The precise terms and conditions for copying, distribution and
 modification follow.
 
-DISCLAIMER: You may use this code but I am not responsible for misuse
-
                        TERMS AND CONDITIONS
+
+WARNING: This code is intended for testing vulnerabilities on networks with authorized 
+consent only. Do not use it on any network without proper permission, this would 
+be illegal and unethical. The creator of this code is not liable for any misuse or 
+damage caused by it.
+
 
   "This License" refers to version 3 of the GNU General Public License.
 
