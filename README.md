@@ -7,5 +7,3 @@ WARNING: This is still under developement, this code may be glitchy, unfinished 
 More network protocols will be coming soon
 
 Read LICENCE
-
-Sorry I gave up midway through realising how much more work I would have to put in
